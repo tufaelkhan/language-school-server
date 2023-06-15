@@ -13,6 +13,7 @@ app.use(express.json())
 //jwt middleware
 const verifyJWT = (req, res, next) =>{
   const authorization = req.headers.authorization;
+  console.log(authorization)
   if(!authorization){
     return res.status(401).send({error: true, message: 'unauthorized access'})
   }
@@ -81,7 +82,7 @@ async function run() {
     }
 
     //users related api use verifyJWT
-    app.get('/users', verifyJWT,  async(req, res) =>{
+    app.get('/users', verifyJWT, verifyAdmin,  async(req, res) =>{
       const result = await usersCollection.find().toArray()
       return res.send(result)
     })
