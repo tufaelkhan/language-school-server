@@ -148,7 +148,7 @@ async function run() {
     })
 
     //teachers related apis
-    app.get('/teachers', async(req, res) =>{
+    app.get('/teachers', verifyJWT, async(req, res) =>{
         const result = await teachersCollection.find().toArray()
         res.send(result)
     })
