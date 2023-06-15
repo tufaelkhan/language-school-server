@@ -158,8 +158,8 @@ async function run() {
         const result = await classesCollection.find().toArray()
         res.send(result)
     })
-//upload class
-    app.post('/classes',  async(req, res) =>{
+//upload class add verifyJWT
+    app.post('/classes', verifyJWT,  async(req, res) =>{
       const newClass = req.body;
       const result = await classesCollection.insertOne(newClass)
       res.send(result)
