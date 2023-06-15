@@ -181,7 +181,7 @@ async function run() {
       res.send(result)
     })
 
-    //select class related api user email base data get and used teacher base classes
+    //select class related api user email base data get and used teacher base classes emplement his email
     app.get('/selects', verifyJWT, async(req, res)=>{
       const email = req.query.email;
       if(!email){
