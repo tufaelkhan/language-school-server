@@ -111,7 +111,7 @@ async function run() {
     })
 
     //make admin patch
-    app.patch('/users/admin/:id', async(req, res)=>{
+    app.patch('/users/admin/:id', verifyJWT, async(req, res)=>{
       const id = req.params.id;
       const filter = {_id: new ObjectId(id)}
       const updateDoc = {
@@ -165,6 +165,7 @@ async function run() {
       res.send(result)
     })
 
+    //instructor related api
     app.get('/myclass', verifyJWT, async(req, res)=>{
       const email = req.query.email;
       if(!email){
@@ -178,6 +179,21 @@ async function run() {
 
       const query = { email: email }
       const result = await classesCollection.find(query).toArray()
+      res.send(result)
+    })
+
+    app.get('/myclass/:id', async(req, res)=>{
+      const id = req.params.id;
+      if(!email){
+        return res.send([])
+      }
+
+      const decodedEmail = req.decoded.email;
+      if(email != decodedEmail){
+        return res.status(401).send({error: true, message: 'forbidden access you try'})
+      }
+      const query = {_id: new ObjectId(id)}
+      const result = await classesCollection.findOne(query)
       res.send(result)
     })
 
