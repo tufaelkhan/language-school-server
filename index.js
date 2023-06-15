@@ -159,14 +159,14 @@ async function run() {
         res.send(result)
     })
 //upload class add verifyJWT
-    app.post('/classes', verifyJWT, verifyInstructor, async(req, res) =>{
+    app.post('/classes', verifyJWT, async(req, res) =>{
       const newClass = req.body;
       const result = await classesCollection.insertOne(newClass)
       res.send(result)
     })
 
     //instructor related api
-    app.get('/myclass', verifyJWT, verifyInstructor, async(req, res)=>{
+    app.get('/myclass', verifyJWT, async(req, res)=>{
       const email = req.query.email;
       if(!email){
         return res.send([])
